@@ -3,3 +3,4 @@ GitHubの練習用です。
 .git add
 .git commit
 .git rm
+.git status
