@@ -4,3 +4,4 @@ GitHubの練習用です。
 .git commit
 .git rm
 .git status
+.git diff
