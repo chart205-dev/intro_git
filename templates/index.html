@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<title>step1 flask</title>
+	<script
+  src="https://code.jquery.com/jquery-3.7.1.min.js"
+  integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+  crossorigin="anonymous"></script>
+
+	<body>
+		<form id = "ul_form">
+			<input type="file" name="img_file" accept = "image/*">
+			<button id = "upload_btn" type="button">upload</button>
+		</form>
+		{% if img_url %}
+		<p>
+			<img id="uld_img" src="{{img_url}}">
+		</p>
+		<button type="button" id="recog_button">画像認識</button>
+		<form id="recog_form">
+			<input type="hidden" name="img_path">
+		</form>
+		{% endif %}
+		{% if pred_label %}
+		<p>
+			認識結果: {{pred_label}}
+		</p>
+		{% endif %}
+	</body>
+	<script>
+		$(function(){
+			$("#upload_btn").on("click", function(){
+				$("#ul_form").attr("target", "_self");
+				$("#ul_form").attr("method", "post");
+				$("#ul_form").attr("action", "{{url_for('upload')}}");
+				$("#ul_form").attr("enctype", "multipart/form-data");
+				$("#ul_form").submit();
+			})
+
+			$("#recog_button").on("click", function(){
+				const img_url = $("#uld_img").attr("src");
+				$("input[name='img_path']").val(img_url);
+				$("#recog_form").attr("target", "_self");
+				$("#recog_form").attr("method", "post");
+				$("#recog_form").attr("action", "{{url_for('recognition')}}");
+				$("#recog_form").submit();
+			})
+
+		});
+	</script>
+</head>
+</html>
